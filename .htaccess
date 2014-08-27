@@ -4,11 +4,12 @@ DirectoryIndex index.html index.php
 	Options -MultiViews
 	RewriteEngine On
 	# FAQ redirects
-	RewriteRule ^faq/acronyms https://plus.google.com/u/4/113265899877877466642/posts/RLgsjDBfZdQ [R=301,L]
+	RewriteRule ^faq/acronyms https://plus.google.com/113265899877877466642/posts/RLgsjDBfZdQ [R=301,L]
+	RewriteRule ^faq/farms https://plus.google.com/100049510410805453768/posts/MtcySGQqCNn [R=301,L]
 	# Misc redirects
-	RewriteRule ^helios https://docs.google.com/forms/d/1OVi6ZjqI3iBeP_gRZ4Ko1H8Wi4t4B5NEE9yK-eMWN80/viewform [R=301,L]
+	#RewriteRule ^helios https://docs.google.com/forms/d/1OVi6ZjqI3iBeP_gRZ4Ko1H8Wi4t4B5NEE9yK-eMWN80/viewform [R=301,L]
 	RewriteRule ^chat https://app.groupme.com/join_group/9442269/pf1eaB [R=301,L]
-	#RewriteRule ^helios https://plus.google.com/communities/103692235770683955065 [R=301,L]
+	RewriteRule ^helios https://plus.google.com/communities/103692235770683955065 [R=301,L]
 	# BHR session handler
 	RewriteRule ^login session/session_handler.php [QSA,L]
 	RewriteRule ^logout session/session_handler.php [QSA,L]
