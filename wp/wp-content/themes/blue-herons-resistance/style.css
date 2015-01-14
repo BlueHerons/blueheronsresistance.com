@@ -1,0 +1,61 @@
+/*
+ Theme Name:   Blue Herons Resistance
+ Theme URI:    http://blueheronsresistance.com/
+ Description:  Blue Herons Resistance Site theme
+ Template:     responsive
+ Version:      1.0.0
+*/
+
+@import url("../responsive/style.css");
+
+body {
+	background: #000;
+	background-image: url("http://blueheronsresistance.com/wp/wp-content/themes/blue-herons-resistance/images/HeronLogo.png");
+	background-repeat: no-repeat;
+	background-position: left bottom;
+	background-attachment: fixed;
+}
+
+#logo {
+	display: none;
+}
+
+#content-full {
+	margin-top: 20px;
+}
+
+.event {
+}
+
+.event + #widgets {
+}
+
+#bgmp_map-canvas {
+	width:100% !important;
+}
+
+/**
+ * BBPRESS OVERRIDES
+ */
+
+#bbpress-forums .status-closed {
+	color: #555 !important;
+	border-left: 5px solid #B22222;
+}
+
+#bbpress-forums .status-closed a {
+	color: #06C !important;
+}
+
+#bbpress-forums .status-closed
+
+#bbpress-forums .status-closed a.bbp-topic-permalink:after {
+	content: " [CLOSED]";
+}
+
+/**
+ * BUDDYPRESS OVERRIDES
+ */
+#buddypress .standard-form #basic-details-section input[type=password] {
+	width: 90%;
+}
