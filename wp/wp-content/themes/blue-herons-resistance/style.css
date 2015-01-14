@@ -30,9 +30,6 @@ body {
 .event + #widgets {
 }
 
-#bgmp_map-canvas {
-	width:100% !important;
-}
 
 /**
  * BBPRESS OVERRIDES
