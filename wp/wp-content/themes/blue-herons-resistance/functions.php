@@ -1,5 +1,5 @@
 <?php
-define('BHR_LOGIN_KEY', "cmpbjm05exirfpjdmhxdk");
+define('BHR_LOGIN_KEY', "");
 
 wp_enqueue_style("bhr", get_stylesheet_directory_uri() . "/blue-herons-resistance.less", array(), time(), "");
 
