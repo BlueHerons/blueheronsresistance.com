@@ -1,6 +1,7 @@
 <?php
 define('BHR_LOGIN_KEY', "");
 
+require_once("shortcodes.php");
 wp_enqueue_style("bhr", get_stylesheet_directory_uri() . "/blue-herons-resistance.less", array(), time(), "");
 
 function bhr_site_banner() {
