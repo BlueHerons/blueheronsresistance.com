@@ -27,7 +27,10 @@ Template Name:  BHR Farm Page
 				<div class="post-edit"><?php edit_post_link( __( '[Edit]', 'responsive' ) ); ?></div>
 
 				<div class="post-entry">
-					<?php the_content( __( 'Read more &#8250;', 'responsive' ) ); ?>
+					<?php $content = get_the_content( __( 'Read more &#8250;', 'responsive' ) ); ?>
+					<?php $content = bhr_append_last_author($content); ?>
+					<?php $content = apply_filters("the_content", $content); ?>
+					<?php echo $content; ?>
 					
 					<?php wp_link_pages( array( 'before' => '<div class="pagination">' . __( 'Pages:', 'responsive' ), 'after' => '</div>' ) ); ?>
 				</div>
