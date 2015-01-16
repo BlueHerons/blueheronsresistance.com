@@ -4,6 +4,21 @@ define('BHR_LOGIN_KEY', "");
 require_once("shortcodes.php");
 wp_enqueue_style("bhr", get_stylesheet_directory_uri() . "/blue-herons-resistance.less", array(), time(), "");
 
+function bhr_append_last_author($content) {
+	global $post;
+	
+	if ($post->post_type == "bgmp") {
+		return;
+	}
+
+	$html  = "<div class=\"post-author\">";
+	$html .= sprintf( __("Last edited by %s on %s at %s", "bhr"), get_the_modified_author(), get_the_modified_date(), get_the_modified_time());
+	$html .= "</div>";
+
+	return $content . $html;
+}
+add_filter("the_content", "bhr_append_last_author");
+
 function bhr_site_banner() {
 	if (function_exists('adrotate_group')) {
 		echo adrotate_group(1); // Meetups
