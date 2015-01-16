@@ -1,15 +1,24 @@
 <?php
-define('BHR_LOGIN_KEY', "cmpbjm05exirfpjdmhxdk");
+define('BHR_LOGIN_KEY', "");
 
 wp_enqueue_style("bhr", get_stylesheet_directory_uri() . "/blue-herons-resistance.less", array(), time(), "");
 
 function bhr_site_banner() {
 	if (function_exists('adrotate_group')) {
-		return adrotate_group(1); // Meetups
+		echo adrotate_group(1); // Meetups
 	}
 }
 
 add_action("responsive_wrapper", "bhr_site_banner");
+
+function bhr_bgmp_shortcode_init() {
+	global $post;
+    
+	if ($post)
+		add_filter( 'bgmp_map-shortcode-called', '__return_true' );
+}
+
+add_action('wp', 'bhr_bgmp_shortcode_init');
 
 /**
  * Returns the array of forum roles for the site.

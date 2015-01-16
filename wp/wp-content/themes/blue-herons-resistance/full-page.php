@@ -13,7 +13,7 @@ Template Name:  BHR Full Page (no menu or sidebar)
 
 get_header(); ?>
 
-<?php if (function_exists('adrotate_ad')) { echo adrotate_ad(1); } ?>
+<?php bhr_site_banner(); ?>
 
 <div id="content-full" class="grid col-940">
 
