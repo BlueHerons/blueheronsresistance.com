@@ -27,4 +27,12 @@ function if_user_not_logged_in_shortcode( $atts , $content = null ) {
 }
 add_shortcode( 'if_user_not_logged_in', 'if_user_not_logged_in_shortcode' );
 
+function farm_info_shortcode( $atts, $content = null ) {
+	$html = "<div id=\"farm-info\">";
+	$html .= "<span class=\"title\">Farm Info</span>";
+	$html .= do_shortcode($content);
+	$html .= "</div>";
+	return $html;
+}
+add_shortcode( "farm_info", "farm_info_shortcode" );
 ?>
