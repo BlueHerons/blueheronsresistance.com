@@ -1,10 +1,10 @@
 <?php
 /*
 Plugin Name:   GroupMe Integration
-Description:   
+Description:   GroupMe Intregrations
 Version:       0.1
-Author:        John Luetke
-Author URI:    http://johnluetke.net
+Author:        John (CaptCynicism)
+Author URI:    http://blueheronsresistance.com
 License:       Apache License 2.0
 */
 
