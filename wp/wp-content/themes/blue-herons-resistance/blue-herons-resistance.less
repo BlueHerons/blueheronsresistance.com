@@ -22,16 +22,21 @@ body.page {
 }
 
 .page {
+	.post-author {
+		font-size: 85%;
+		margin-top: 20px;
+	}
+
+	.post-edit {
+		float: right;
+		font-size: 100% !important;
+		margin-top: -50px;
+	}
+
 	.farm {
 		.post-author {
 			font-size: 85%;
 			margin-top: 20px;
-		}
-
-		.post-edit {
-			float: right;
-			font-size: 100% !important;
-			margin-top: -50px;
 		}
 
 		#bgmp_map-canvas {
@@ -64,4 +69,29 @@ body.page {
 			
 		}
 	}
+
+        &.timer {
+            .timer {
+                font-size: 72pt;
+                margin: 10px;
+            }
+
+            .timer, form#reset {
+                text-align: center;
+            }
+
+            .details {
+                font-style: italic;
+            }
+
+            .duration, .who {
+                font-weight: bold;
+            }
+
+            .past, .avg, .top {
+                float: left;
+            }
+        }
 }
+
+
