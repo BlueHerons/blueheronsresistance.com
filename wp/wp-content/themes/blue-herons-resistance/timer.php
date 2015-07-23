@@ -10,7 +10,7 @@ require("vendor/autoload.php");
 /**
 Template Name: Count Up Timer
  */
-define ("GM_TOKEN", "");
+define ("GM_TOKEN", "Atice1x4sttikR04Uak1xRsEEpWqTmO48H31nt0e");
 
 $all = unserialize(get_post_meta($wp_query->post->ID, "all_resets", true));
 
@@ -20,10 +20,6 @@ if (isset($_REQUEST['user']) && isset($_REQUEST['reset']) &&
     $last = intval(get_post_meta($wp_query->post->ID, "last_reset", true));
     $now = intval($_REQUEST['reset']);
 
-    print_r($_REQUEST);
-
-    echo $last . " < " . $now;
-
     // Is this reset time after the last reset time?
     if ($last < $now) {
         $p = array("user"     => $_REQUEST['user'],
@@ -31,14 +27,14 @@ if (isset($_REQUEST['user']) && isset($_REQUEST['reset']) &&
                    "reset"    => $_REQUEST['reset']);
         $all[] = $p;
 
-        // POST message to GM API using token + gm_group_id
-        $gm = new GroupMePHP\groupme(GM_TOKEN);
         $room = get_post_meta($wp_query->post->ID, "groupme_group_id", true);
-        $message = sprintf("%s smashed 35th! Time since last smash was %s", get_userdata($_REQUEST['user'])->user_login, $_REQUEST['duration']);
-        $gm->messages->create($room, array(
-            uniqid(),
-            $message
-        ));
+        $message = sprintf("@%s smashed %s! Time since last smash was %s.",
+                                get_userdata($_REQUEST['user'])->user_login,
+                                get_post_meta($wp_query->post->ID, "name", true),
+                                $_REQUEST['duration']);
+
+        $bot = new \BlueHerons\GroupMe\Bots\TacticsBot(GM_TOKEN);
+        $bot->broadcast($room, $message);
 
         update_post_meta($wp_query->post->ID, "all_resets", serialize($all));
         update_post_meta($wp_query->post->ID, "last_reset", $_REQUEST['reset']);
