@@ -19,25 +19,33 @@ if (isset($_REQUEST['user']) && isset($_REQUEST['reset']) &&
 
     $last = intval(get_post_meta($wp_query->post->ID, "last_reset", true));
     $now = intval($_REQUEST['reset']);
+	
+    $last_user = get_post_meta($wp_query->post->ID, "last_user", true);
 
     // Is this reset time after the last reset time?
     if ($last < $now) {
-        $p = array("user"     => $_REQUEST['user'],
-                   "duration" => $_REQUEST['duration'],
-                   "reset"    => $_REQUEST['reset']);
-        $all[] = $p;
-
-        $room = get_post_meta($wp_query->post->ID, "groupme_group_id", true);
-        $message = sprintf("@%s smashed %s! Time since last smash was %s.",
-                                get_userdata($_REQUEST['user'])->user_login,
-                                get_post_meta($wp_query->post->ID, "name", true),
-                                $_REQUEST['duration']);
-
-        $bot = new \BlueHerons\GroupMe\Bots\TacticsBot(GM_TOKEN);
-        $bot->broadcast($room, $message);
-
-        update_post_meta($wp_query->post->ID, "all_resets", serialize($all));
-        update_post_meta($wp_query->post->ID, "last_reset", $_REQUEST['reset']);
+		
+		// If this is the same user who last reset, has 15 minutes passed?
+		if ( $last_user != $_REQUEST['user'] || $last + 900 < $now ) {
+			
+			$p = array("user"     => $_REQUEST['user'],
+					   "duration" => $_REQUEST['duration'],
+					   "reset"    => $_REQUEST['reset']);
+			$all[] = $p;
+	
+			$room = get_post_meta($wp_query->post->ID, "groupme_group_id", true);
+			$message = sprintf("@%s smashed %s! Time since last smash was %s.",
+									get_userdata($_REQUEST['user'])->user_login,
+									get_post_meta($wp_query->post->ID, "name", true),
+									$_REQUEST['duration']);
+	
+			$bot = new \BlueHerons\GroupMe\Bots\TacticsBot(GM_TOKEN);
+			$bot->broadcast($room, $message);
+	
+			update_post_meta($wp_query->post->ID, "all_resets", serialize($all));
+			update_post_meta($wp_query->post->ID, "last_reset", $_REQUEST['reset']);
+			update_post_meta($wp_query->post->ID, "last_user", $_REQUEST['user']);
+        }
     }
 }
 
