@@ -10,7 +10,7 @@ require("vendor/autoload.php");
 /**
 Template Name: Count Up Timer
  */
-define ("GM_TOKEN", "Atice1x4sttikR04Uak1xRsEEpWqTmO48H31nt0e");
+require("gm_config.php");
 
 $all = unserialize(get_post_meta($wp_query->post->ID, "all_resets", true));
 
