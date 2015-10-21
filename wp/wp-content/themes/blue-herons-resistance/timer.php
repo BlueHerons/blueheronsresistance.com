@@ -2,7 +2,7 @@
 
 // Exit if accessed directly
 if ( !defined( 'ABSPATH' ) ) {
-	exit;
+    exit;
 }
 
 require("vendor/autoload.php");
@@ -19,32 +19,32 @@ if (isset($_REQUEST['user']) && isset($_REQUEST['reset']) &&
 
     $last = intval(get_post_meta($wp_query->post->ID, "last_reset", true));
     $now = intval($_REQUEST['reset']);
-	
+
     $last_user = get_post_meta($wp_query->post->ID, "last_user", true);
 
     // Is this reset time after the last reset time?
     if ($last < $now) {
-		
-		// If this is the same user who last reset, has 15 minutes passed?
-		if ( $last_user != $_REQUEST['user'] || $last + 900 < $now ) {
-			
-			$p = array("user"     => $_REQUEST['user'],
-					   "duration" => $_REQUEST['duration'],
-					   "reset"    => $_REQUEST['reset']);
-			$all[] = $p;
-	
-			$room = get_post_meta($wp_query->post->ID, "groupme_group_id", true);
-			$message = sprintf("@%s smashed %s! Time since last smash was %s.",
-									get_userdata($_REQUEST['user'])->user_login,
-									get_post_meta($wp_query->post->ID, "name", true),
-									$_REQUEST['duration']);
-	
-			$bot = new \BlueHerons\GroupMe\Bots\TacticsBot(GM_TOKEN);
-			$bot->broadcast($room, $message);
-	
-			update_post_meta($wp_query->post->ID, "all_resets", serialize($all));
-			update_post_meta($wp_query->post->ID, "last_reset", $_REQUEST['reset']);
-			update_post_meta($wp_query->post->ID, "last_user", $_REQUEST['user']);
+        // If this is the same user who last reset, has 15 minutes passed?
+        if ( $last_user != $_REQUEST['user'] || $last + 900 < $now ) {
+
+            $p = array("user"     => $_REQUEST['user'],
+                       "duration" => $_REQUEST['duration'],
+                       "reset"    => $_REQUEST['reset']);
+            $all[] = $p;
+
+            if (get_post_meta($wp_query->post->ID, "groupme_group_id", true) != "") {
+                $room = get_post_meta($wp_query->post->ID, "groupme_group_id", true);
+                $message = sprintf("@%s smashed %s! Time since last smash was %s.",
+                                        get_userdata($_REQUEST['user'])->user_login,
+                                        get_post_meta($wp_query->post->ID, "name", true),
+                                        $_REQUEST['duration']);
+                $bot = new \BlueHerons\GroupMe\Bots\TacticsBot(GM_TOKEN);
+                $bot->buttonPress($room, $message);
+            }
+
+            update_post_meta($wp_query->post->ID, "all_resets", serialize($all));
+            update_post_meta($wp_query->post->ID, "last_reset", $_REQUEST['reset']);
+            update_post_meta($wp_query->post->ID, "last_user", $_REQUEST['user']);
         }
     }
 }
@@ -83,18 +83,18 @@ $start = get_post_meta($wp_query->post->ID, "last_reset", true);
 </script>
 <div id="content" class="grid col-940">
 
-	<?php if ( have_posts() ) : ?>
+    <?php if ( have_posts() ) : ?>
 
-		<?php while( have_posts() ) : the_post(); ?>
+        <?php while( have_posts() ) : the_post(); ?>
 
-			<?php responsive_entry_before(); ?>
-			<div id="post-<?php the_ID(); ?>" <?php post_class("timer"); ?>>
-				<?php responsive_entry_top(); ?>
+            <?php responsive_entry_before(); ?>
+            <div id="post-<?php the_ID(); ?>" <?php post_class("timer"); ?>>
+                <?php responsive_entry_top(); ?>
 
-				<h1 class="post-title"><?php the_title(); ?></h1>
-				<div class="post-edit"><?php edit_post_link( __( '[Edit]', 'responsive' ) ); ?></div>
+                <h1 class="post-title"><?php the_title(); ?></h1>
+                <div class="post-edit"><?php edit_post_link( __( '[Edit]', 'responsive' ) ); ?></div>
 
-				<div class="post-entry">
+                <div class="post-entry">
                                     <h2 class="timer"></h2>
                                     <?php if (is_user_logged_in()) { ?>
                                     <?php if (current_user_can("is_verified")) { ?>
@@ -102,7 +102,7 @@ $start = get_post_meta($wp_query->post->ID, "last_reset", true);
                                         <input type="hidden" name="user" value="<?php echo wp_get_current_user()->ID; ?>" />
                                         <input type="hidden" name="reset" />
                                         <input type="hidden" name="duration" />
-                                        <input type="submit" value="I smashed 35th! Reset the timer!" />
+                                        <input type="submit" value="I smashed <?php echo get_post_meta($wp_query->post->ID, "name", true);?>! Reset the timer!" />
                                     </form>
                                     <?php } else { ?>
                                     <p style="text-align: center" class="restricted">You have logged in, however You must be verified before you can reset the timer.</p>
@@ -154,24 +154,24 @@ $start = get_post_meta($wp_query->post->ID, "last_reset", true);
                                             <?php } ?>
                                             </ul>
                                     </div>
-				</div>
-				<!-- end of .post-entry -->
+                </div>
+                <!-- end of .post-entry -->
 
-				<?php responsive_entry_bottom(); ?>
-			</div><!-- end of #post-<?php the_ID(); ?> -->
-			<?php responsive_entry_after(); ?>
+                <?php responsive_entry_bottom(); ?>
+            </div><!-- end of #post-<?php the_ID(); ?> -->
+            <?php responsive_entry_after(); ?>
 
-		<?php
-		endwhile;
+        <?php
+        endwhile;
 
-		get_template_part( 'loop-nav', get_post_type() );
+        get_template_part( 'loop-nav', get_post_type() );
 
-	else :
+    else :
 
-		get_template_part( 'loop-no-posts', get_post_type() );
+        get_template_part( 'loop-no-posts', get_post_type() );
 
-	endif;
-	?>
+    endif;
+    ?>
 
 </div><!-- end of #content -->
 
